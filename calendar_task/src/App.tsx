@@ -1,7 +1,10 @@
-import './App.sass';
+import "./App.sass";
+import DeliveryDateInput from "./components/DeliveryDateInput";
 
 const App = () => (
-  <div className="App"></div>
-)
+  <div className="App">
+    <DeliveryDateInput />
+  </div>
+);
 
-export default App
+export default App;
