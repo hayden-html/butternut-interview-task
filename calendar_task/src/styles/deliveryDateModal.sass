@@ -1,0 +1,93 @@
+@import "../brand-colours"
+@import "../fonts"
+
+.modal
+    &_background 
+        background-color: #00000080
+        position: absolute
+        inset: 0
+        z-index: 3
+        display: flex
+        align-items: center
+        justify-content: center
+
+    &_form
+        background-color: $brand-white
+        inset: 0
+        width: fit-content
+        font-family: $font-family-base-regular
+        padding: 1.5rem
+
+
+    &_month
+        text-align: center
+        font-weight: 600
+        color: $brand-blue-500
+        margin-bottom: 1rem
+    
+    &_calendar
+        margin-bottom: 1rem
+        .date_options, .day_label
+            display: grid
+            grid-template-columns: repeat(7, 2.25rem)
+            gap: .1875rem
+            place-items: center
+
+        .day_label
+            text-align: center
+            font-family: $font-family-base-mono
+            color: $brand-blue-500
+            font-weight: 300
+            margin-bottom: 1rem
+
+        .day_label, .date_option
+            width: 100%
+
+
+        .date_option
+            border-radius: 0
+            aspect-ratio: 1 / 1
+            font-family: $font-family-base-regular
+            &.empty
+                display: none
+            &.unavailable
+                border: none
+                background-color: $grey-300
+                color: $grey-500
+
+            &.available
+                border: 2px solid $brand-red-400
+                background-color: $brand-white
+                color: $brand-red-400
+                cursor: pointer
+                &.selected
+                    color: $brand-white
+                    background-color: $brand-red-400
+
+    
+.modal_buttons
+    display: flex
+    justify-content: center
+    gap: 1rem
+
+    .button_cancel, .button_update 
+        font-family: $font-family-base-regular
+        // font-size: 1rem
+        text-transform: uppercase
+        background: none
+        cursor: pointer
+
+    
+
+    .button_cancel
+        border: none
+        color: $grey-500
+        &:hover
+            color: $grey-600
+
+    .button_update
+        border: $brand-red-400 1px solid
+        color: $brand-red-400
+        box-shadow: rgba(100, 100, 100, 0.5) .125rem .125rem .25rem
+
+
