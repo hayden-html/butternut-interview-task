@@ -1,0 +1,125 @@
+@import "../brand-colours"
+@import "../fonts"
+
+.delivery_input
+  padding: 1rem
+  margin: 1rem
+  background-color: $grey-100
+  color: $brand-blue-500
+  max-width: 18rem
+
+.title
+  margin-bottom: 1.5rem
+  &_heading
+    font-size: 1.75rem
+    line-height: 1.4
+    font-family: $font-family-headings
+    color: $brand-blue-500
+    display: inline
+    margin-right: 1rem
+  &_hint 
+    display: inline-block
+    font-family: $font-family-base-regular
+    font-size: .875rem
+    padding: .25rem .5rem
+    background-color: $grey-200
+    position: relative
+    bottom: .25rem
+
+.selected_delivery
+  background-color: white
+  position: relative
+  overflow: hidden
+  border: none
+  border-radius: .25rem
+  box-shadow: rgba(100, 100, 100, 0.4) .125rem .125rem .5rem
+  // background-image: radial-gradient(circle at 100% 50%, $brand-blue-200 32%, white 32.5%)
+  background-position-x: 10%
+  transition: background-postition-x 1000ms
+  background-repeat: no-repeat
+
+
+  cursor: pointer
+  display: flex
+  justify-content: space-between
+  width: 100%
+  font-family: $font-family-base-regular
+  color: $brand-blue-500
+  padding: .5rem .75rem
+
+  &::after
+    content: ''
+    background-image: radial-gradient($brand-blue-200 99%, white 100%)
+    background-position: right
+    border-radius: 1000rem 0 0 1000rem
+    width: 7rem
+    aspect-ratio: 1 / 1
+    overflow-x: hidden
+    position: absolute
+    z-index: 1
+    top: -1rem
+    right: -1rem
+    transition: width .3s
+
+
+
+
+  &:hover
+    &::after
+      width: 48rem
+  
+  * 
+    z-index: 2
+    
+    
+    
+    
+
+.delivery
+  
+  &_hint 
+    display: flex
+    align-items: center
+    gap: .25rem
+    padding: .25rem .5rem
+    background-color: $success-green-100
+    font-size: .875rem
+    border-radius: .125rem
+
+    .van-icon
+      display: block
+      scale: .9
+
+
+  &_date
+    font-size: 1.125rem
+    text-align: start
+    margin-bottom: .25rem
+
+
+  &_change_date
+    // background-color: $brand-blue-100
+    display: flex
+    flex-direction: column
+    justify-content: center
+    .button_icon
+      position: relative
+      .calendar_icon
+        scale: .8
+      .calendar_text
+        position: absolute
+        bottom: 9px
+        left: 24px
+        font-size: .75rem
+        text-align: center
+        width: 2ch
+        
+    .button
+      display: flex
+      align-items: center
+      gap: .25rem
+      &_text
+        margin: 0 auto
+        text-decoration: underline
+        padding-bottom: 1px
+        font-size: .875rem
