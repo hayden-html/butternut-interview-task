@@ -1,23 +1,34 @@
+import React, { useState } from "react";
 import "../styles/deliveryDateModal.sass";
 
 export default function SelectDeliveryDateModal({
   setIsOpen,
+  chosenDate,
+  setChosenDate,
 }: {
   setIsOpen: (x: boolean) => void;
+  chosenDate: Date;
+  setChosenDate: (x: Date) => void;
 }) {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth();
 
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const monthLength = new Date(year, month + 1, 0).getDate();
+  const dateOptions = Array.from({ length: monthLength }, (_, i) => i + 1);
 
-  const dateOptions = Array.from({ length: daysInMonth }, (_, i) => i + 1).map(
-    (i) => <DateOption key={i} date={i.toString()} />,
-  );
+  const startingDay = new Date(year, month, 0).getDay();
+
+  const [selectedDay, setSelectedDay] = useState(chosenDate);
+
+  function submitNewDate() {
+    setChosenDate(selectedDay);
+    setIsOpen(false);
+  }
 
   return (
-    <div className="modal_background">
-      <div className="modal_form">
+    <div className="modal_background" onClick={() => setIsOpen(false)}>
+      <div className="modal_form" onClick={(e) => e.stopPropagation()}>
         <p className="modal_month">
           {date.toLocaleDateString("en-US", { month: "long", year: "numeric" })}
         </p>
@@ -31,21 +42,74 @@ export default function SelectDeliveryDateModal({
             <p>S</p>
             <p>S</p>
           </div>
-          <div className="date_options">{dateOptions}</div>
+          <div className="date_options">
+            <div
+              className={`month-before`}
+              style={{
+                gridColumnEnd: startingDay + 1,
+                display: startingDay < 0 ? "none" : "",
+              }}
+            ></div>
+            {dateOptions.map((dayNumber, i) => (
+              <DateOption
+                key={i}
+                dayNumber={dayNumber}
+                month={month}
+                year={year}
+                selectedDay={selectedDay}
+                setSelectedDay={setSelectedDay}
+                chosenDate={chosenDate}
+              />
+            ))}
+          </div>
         </div>
         <div className="modal_buttons">
-          <button className="button_cancel">
+          <button className="button_cancel" onClick={() => setIsOpen(false)}>
             Cancel,
             <br />
             Don't Change
           </button>
-          <button className="button_update">Change Date</button>
+          <button className="button_update" onClick={() => submitNewDate()}>
+            Change Date
+          </button>
         </div>
       </div>
     </div>
   );
 }
 
-function DateOption({ date }: { date: string }) {
-  return <button className="date_option">{date}</button>;
+function DateOption({
+  dayNumber,
+  month,
+  year,
+  selectedDay,
+  setSelectedDay,
+  chosenDate,
+}: {
+  dayNumber: number;
+  month: number;
+  year: number;
+  selectedDay: Date;
+  setSelectedDay: (x: Date) => void;
+  chosenDate: Date;
+}) {
+  const date = new Date(year, month, dayNumber);
+  const dayOfWeek = date.getDay();
+  const isUnavailable =
+    dayOfWeek === 0 || dayOfWeek === 2 || dayOfWeek === 6 || date < new Date();
+  return (
+    <label
+      htmlFor={"date-" + dayNumber}
+      className={`date_option ${isUnavailable ? "unavailable" : "available"} ${date.toDateString() === selectedDay.toDateString() ? "selected" : ""}`}
+    >
+      <span>{dayNumber}</span>
+      <input
+        className="hidden-input"
+        type="radio"
+        checked={date.toDateString() === selectedDay.toDateString()}
+        id={"date-" + dayNumber}
+        onClick={() => setSelectedDay(date)}
+      />
+    </label>
+  );
 }

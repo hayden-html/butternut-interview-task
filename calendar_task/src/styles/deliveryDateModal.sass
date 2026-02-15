@@ -48,8 +48,12 @@
             border-radius: 0
             aspect-ratio: 1 / 1
             font-family: $font-family-base-regular
-            &.empty
-                display: none
+            display: flex
+            align-items: center
+            justify-content: center
+            box-sizing: border-box
+            // &.empty
+            //     display: none
             &.unavailable
                 border: none
                 background-color: $grey-300
@@ -57,6 +61,7 @@
 
             &.available
                 border: 2px solid $brand-red-400
+                
                 background-color: $brand-white
                 color: $brand-red-400
                 cursor: pointer
@@ -64,6 +69,11 @@
                     color: $brand-white
                     background-color: $brand-red-400
 
+.hidden-input
+    position: absolute
+    height: 0px
+    width: 0px
+    opacity: 0
     
 .modal_buttons
     display: flex
@@ -89,5 +99,8 @@
         border: $brand-red-400 1px solid
         color: $brand-red-400
         box-shadow: rgba(100, 100, 100, 0.5) .125rem .125rem .25rem
+        &:hover
+            color: $brand-white
+            background-color: $brand-red-400
 
 

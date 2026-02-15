@@ -7,6 +7,47 @@ import SelectDeliveryDateModal from "./SelectDeliveryDateModal";
 
 export default function DeliveryDateInput() {
   const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(true);
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const dateNumber = date.getDate();
+  let day = date.getDay();
+
+  const findNextDeliverableDay = () => {
+    // Todo: if dates are in the next month, they should be selectable
+    let earliestDate = dateNumber + 1;
+    if (day === 0 || day === 2) {
+      earliestDate = dateNumber + 1;
+    } else if (day === 6) {
+      earliestDate = dateNumber + 2;
+    }
+
+    const deliverableDate = new Date(year, month, dateNumber).setDate(
+      earliestDate,
+    );
+    return new Date(deliverableDate);
+  };
+
+  // const nextDeliverableDate =
+  const [chosenDate, setChosenDate] = useState(
+    new Date(findNextDeliverableDay()),
+  );
+
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   return (
     <>
@@ -20,7 +61,7 @@ export default function DeliveryDateInput() {
           onClick={() => setIsDeliveryModalOpen(true)}
         >
           <div className="selected_delivery__date">
-            <p className="delivery_date">Fri Feb 13</p>
+            <p className="delivery_date">{`${days[chosenDate.getDay()]} ${chosenDate.getDate()} ${months[chosenDate.getMonth()]} ${chosenDate.getFullYear()}`}</p>
             <div className="delivery_hint">
               <Van aria-label="delivery van" className="van_icon" />
               <p className="">Earliest delivery</p>
@@ -32,7 +73,7 @@ export default function DeliveryDateInput() {
                 aria-label="day of calendar month"
                 className="calendar_icon"
               />
-              <div className="calendar_text">10</div>
+              <div className="calendar_text">{chosenDate.getDate()}</div>
             </div>
             <div className="button">
               <span className="button_text">Change</span>
@@ -43,7 +84,11 @@ export default function DeliveryDateInput() {
       </div>
 
       {isDeliveryModalOpen && (
-        <SelectDeliveryDateModal setIsOpen={setIsDeliveryModalOpen} />
+        <SelectDeliveryDateModal
+          chosenDate={chosenDate}
+          setChosenDate={setChosenDate}
+          setIsOpen={setIsDeliveryModalOpen}
+        />
       )}
     </>
   );
