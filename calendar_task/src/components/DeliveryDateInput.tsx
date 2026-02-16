@@ -8,10 +8,6 @@ import SelectDeliveryDateModal from "./SelectDeliveryDateModal";
 export default function DeliveryDateInput() {
   const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(true);
   const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const dateNumber = date.getDate();
-  let day = date.getDay();
 
   const findNextDeliverableDay = () => {
     const thirtySixHoursLater = new Date(date.getTime() + 36 * 60 * 60 * 1000);

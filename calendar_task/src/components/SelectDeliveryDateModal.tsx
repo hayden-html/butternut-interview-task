@@ -10,7 +10,7 @@ export default function SelectDeliveryDateModal({
   chosenDate: Date;
   setChosenDate: (x: Date) => void;
 }) {
-  const date = new Date();
+  const date = new Date(chosenDate);
   const year = date.getFullYear();
   const month = date.getMonth();
 
@@ -58,7 +58,6 @@ export default function SelectDeliveryDateModal({
                 year={year}
                 selectedDay={selectedDay}
                 setSelectedDay={setSelectedDay}
-                chosenDate={chosenDate}
               />
             ))}
           </div>
@@ -84,14 +83,12 @@ function DateOption({
   year,
   selectedDay,
   setSelectedDay,
-  chosenDate,
 }: {
   dayNumber: number;
   month: number;
   year: number;
   selectedDay: Date;
   setSelectedDay: (x: Date) => void;
-  chosenDate: Date;
 }) {
   const date = new Date(year, month, dayNumber);
   const dayOfWeek = date.getDay();
