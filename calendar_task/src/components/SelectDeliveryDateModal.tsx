@@ -108,7 +108,11 @@ function DateOption({
         type="radio"
         checked={date.toDateString() === selectedDay.toDateString()}
         id={"date-" + dayNumber}
-        onClick={() => setSelectedDay(date)}
+        onClick={() => {
+          if (!isUnavailable) {
+            setSelectedDay(date);
+          }
+        }}
       />
     </label>
   );
