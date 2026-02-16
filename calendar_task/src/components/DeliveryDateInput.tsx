@@ -14,18 +14,19 @@ export default function DeliveryDateInput() {
   let day = date.getDay();
 
   const findNextDeliverableDay = () => {
-    // Todo: if dates are in the next month, they should be selectable
-    let earliestDate = dateNumber + 1;
-    if (day === 0 || day === 2) {
-      earliestDate = dateNumber + 1;
-    } else if (day === 6) {
-      earliestDate = dateNumber + 2;
+    const thirtySixHoursLater = new Date(date.getTime() + 36 * 60 * 60 * 1000);
+    const nextDeliverableDate = new Date(thirtySixHoursLater);
+    if (
+      thirtySixHoursLater.getDay() === 0 ||
+      thirtySixHoursLater.getDay() === 2
+    ) {
+      nextDeliverableDate.setDate(thirtySixHoursLater.getDate() + 1);
     }
 
-    const deliverableDate = new Date(year, month, dateNumber).setDate(
-      earliestDate,
-    );
-    return new Date(deliverableDate);
+    if (thirtySixHoursLater.getDay() === 6) {
+      nextDeliverableDate.setDate(thirtySixHoursLater.getDate() + 2);
+    }
+    return new Date(nextDeliverableDate);
   };
 
   // const nextDeliverableDate =
@@ -48,7 +49,8 @@ export default function DeliveryDateInput() {
     "Nov",
     "Dec",
   ];
-
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
   return (
     <>
       <div className="delivery_input">
